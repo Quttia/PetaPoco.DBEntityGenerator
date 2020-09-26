@@ -22,10 +22,12 @@
                 {
                     while (rdr.Read())
                     {
-                        Table tbl = new Table();
-                        tbl.Name = rdr["TABLE_NAME"].ToString();
-                        tbl.Schema = rdr["TABLE_SCHEMA"].ToString();
-                        tbl.IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0;
+                        Table tbl = new Table
+                        {
+                            Name = rdr["TABLE_NAME"].ToString(),
+                            Schema = rdr["TABLE_SCHEMA"].ToString(),
+                            IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0
+                        };
                         tbl.CleanName = CleanUp(tbl.Name);
                         tbl.ClassName = Inflector.MakeSingular(tbl.CleanName);
                         result.Add(tbl);
@@ -46,8 +48,10 @@
                 var columns = schema.Select("TABLE_NAME='" + item.Name + "'");
                 foreach (var row in columns)
                 {
-                    Column col = new Column();
-                    col.Name = row["COLUMN_NAME"].ToString();
+                    Column col = new Column
+                    {
+                        Name = row["COLUMN_NAME"].ToString()
+                    };
                     col.PropertyName = CleanUp(col.Name);
                     col.PropertyType = GetPropertyType(row);
                     col.IsNullable = row["IS_NULLABLE"].ToString() == "YES";
@@ -62,7 +66,7 @@
 
         }
 
-        static string GetPropertyType(DataRow row)
+        private static string GetPropertyType(DataRow row)
         {
             bool bUnsigned = row["COLUMN_TYPE"].ToString().IndexOf("unsigned") >= 0;
             string propType = "string";
@@ -119,7 +123,7 @@
             return propType;
         }
 
-        const string TABLE_SQL = @"
+        private const string TABLE_SQL = @"
             SELECT * 
             FROM information_schema.tables 
             WHERE (table_type='BASE TABLE' OR table_type='VIEW') AND TABLE_SCHEMA=DATABASE()

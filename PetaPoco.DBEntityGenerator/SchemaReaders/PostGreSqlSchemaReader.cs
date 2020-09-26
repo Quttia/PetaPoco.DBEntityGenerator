@@ -1,12 +1,11 @@
 ﻿namespace PetaPoco.DBEntityGenerator.SchemaReaders
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Common;
     using System.Linq;
 
-    class PostGreSqlSchemaReader : SchemaReader
+    internal class PostGreSqlSchemaReader : SchemaReader
     {
         // SchemaReader.ReadSchema
         public override Tables ReadSchema(DbConnection connection, DbProviderFactory factory)
@@ -27,10 +26,12 @@
                 {
                     while (rdr.Read())
                     {
-                        Table tbl = new Table();
-                        tbl.Name = rdr["table_name"].ToString();
-                        tbl.Schema = rdr["table_schema"].ToString();
-                        tbl.IsView = string.Compare(rdr["table_type"].ToString(), "View", true) == 0;
+                        Table tbl = new Table
+                        {
+                            Name = rdr["table_name"].ToString(),
+                            Schema = rdr["table_schema"].ToString(),
+                            IsView = string.Compare(rdr["table_type"].ToString(), "View", true) == 0
+                        };
                         tbl.CleanName = CleanUp(tbl.Name);
                         tbl.ClassName = Inflector.MakeSingular(tbl.CleanName);
                         result.Add(tbl);
@@ -46,17 +47,19 @@
                 string PrimaryKey = GetPK(tbl.Name);
                 var pkColumn = tbl.Columns.SingleOrDefault(x => x.Name.ToLower().Trim() == PrimaryKey.ToLower().Trim());
                 if (pkColumn != null)
+                {
                     pkColumn.IsPK = true;
+                }
             }
 
 
             return result;
         }
 
-        DbConnection _connection;
-        DbProviderFactory _factory;
+        private DbConnection _connection;
+        private DbProviderFactory _factory;
 
-        List<Column> LoadColumns(Table tbl)
+        private List<Column> LoadColumns(Table tbl)
         {
 
             using (var cmd = _factory.CreateCommand())
@@ -79,8 +82,10 @@
                 {
                     while (rdr.Read())
                     {
-                        Column col = new Column();
-                        col.Name = rdr["column_name"].ToString();
+                        Column col = new Column
+                        {
+                            Name = rdr["column_name"].ToString()
+                        };
                         col.PropertyName = CleanUp(col.Name);
                         col.PropertyType = GetPropertyType(rdr["udt_name"].ToString());
                         col.IsNullable = rdr["is_nullable"].ToString() == "YES";
@@ -93,7 +98,7 @@
             }
         }
 
-        string GetPK(string table)
+        private string GetPK(string table)
         {
 
             string sql = @"SELECT kcu.column_name 
@@ -116,13 +121,15 @@
                 var result = cmd.ExecuteScalar();
 
                 if (result != null)
+                {
                     return result.ToString();
+                }
             }
 
             return "";
         }
 
-        string GetPropertyType(string sqlType)
+        private string GetPropertyType(string sqlType)
         {
             switch (sqlType)
             {
@@ -170,14 +177,13 @@
             }
         }
 
-        const string TABLE_SQL = @"
+        private const string TABLE_SQL = @"
             SELECT table_name, table_schema, table_type
             FROM information_schema.tables 
             WHERE (table_type='BASE TABLE' OR table_type='VIEW')
                 AND table_schema NOT IN ('pg_catalog', 'information_schema');
             ";
-
-        const string COLUMN_SQL = @"
+        private const string COLUMN_SQL = @"
             SELECT column_name, is_nullable, udt_name, column_default
             FROM information_schema.columns 
             WHERE table_name=@tableName and table_schema = @tableSchema;

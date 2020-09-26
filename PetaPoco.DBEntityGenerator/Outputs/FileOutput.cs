@@ -8,8 +8,10 @@
 
         public FileOutput(string fileName)
         {
-            _streamWriter = new StreamWriter(fileName, false);
-            _streamWriter.AutoFlush = true;
+            _streamWriter = new StreamWriter(fileName, false)
+            {
+                AutoFlush = true
+            };
         }
 
         public void WriteLine(string text)

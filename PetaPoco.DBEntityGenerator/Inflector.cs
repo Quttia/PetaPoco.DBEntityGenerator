@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Text;
     using System.Text.RegularExpressions;
 
     /// <summary>
@@ -38,7 +37,7 @@
             AddPluralRule("^(ox)$", "$1en");
             AddPluralRule("(quiz)$", "$1zes");
 
-            AddSingularRule("s$", String.Empty);
+            AddSingularRule("s$", string.Empty);
             AddSingularRule("ss$", "ss");
             AddSingularRule("(n)ews$", "$1ews");
             AddSingularRule("([ti])a$", "$1um");
@@ -89,8 +88,8 @@
         /// <param name="plural">The plural.</param>
         private static void AddIrregularRule(string singular, string plural)
         {
-            AddPluralRule(String.Concat("(", singular[0], ")", singular.Substring(1), "$"), String.Concat("$1", plural.Substring(1)));
-            AddSingularRule(String.Concat("(", plural[0], ")", plural.Substring(1), "$"), String.Concat("$1", singular.Substring(1)));
+            AddPluralRule(string.Concat("(", singular[0], ")", singular.Substring(1), "$"), string.Concat("$1", plural.Substring(1)));
+            AddSingularRule(string.Concat("(", plural[0], ")", plural.Substring(1), "$"), string.Concat("$1", singular.Substring(1)));
         }
 
         /// <summary>
@@ -205,7 +204,7 @@
         /// <returns></returns>
         public static string MakeInitialCaps(string word)
         {
-            return String.Concat(word.Substring(0, 1).ToUpper(), word.Substring(1).ToLower());
+            return string.Concat(word.Substring(0, 1).ToUpper(), word.Substring(1).ToLower());
         }
 
         /// <summary>
@@ -215,7 +214,7 @@
         /// <returns></returns>
         public static string MakeInitialLowerCase(string word)
         {
-            return String.Concat(word.Substring(0, 1).ToLower(), word.Substring(1));
+            return string.Concat(word.Substring(0, 1).ToLower(), word.Substring(1));
         }
 
 
@@ -228,8 +227,7 @@
         /// </returns>
         public static bool IsStringNumeric(string str)
         {
-            double result;
-            return (double.TryParse(str, NumberStyles.Float, NumberFormatInfo.CurrentInfo, out result));
+            return (double.TryParse(str, NumberStyles.Float, NumberFormatInfo.CurrentInfo, out double result));
         }
 
         /// <summary>
@@ -245,18 +243,20 @@
                 int nMod100 = n % 100;
 
                 if (nMod100 >= 11 && nMod100 <= 13)
-                    return String.Concat(number, "th");
+                {
+                    return string.Concat(number, "th");
+                }
 
                 switch (n % 10)
                 {
                     case 1:
-                        return String.Concat(number, "st");
+                        return string.Concat(number, "st");
                     case 2:
-                        return String.Concat(number, "nd");
+                        return string.Concat(number, "nd");
                     case 3:
-                        return String.Concat(number, "rd");
+                        return string.Concat(number, "rd");
                     default:
-                        return String.Concat(number, "th");
+                        return string.Concat(number, "th");
                 }
             }
             return number;
@@ -309,11 +309,15 @@
             public string Apply(string word)
             {
                 if (!regex.IsMatch(word))
+                {
                     return null;
+                }
 
                 string replace = regex.Replace(word, replacement);
                 if (word == word.ToUpper())
+                {
                     replace = replace.ToUpper();
+                }
 
                 return replace;
             }

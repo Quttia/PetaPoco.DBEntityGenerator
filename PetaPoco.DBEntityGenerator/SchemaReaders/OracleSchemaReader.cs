@@ -30,10 +30,12 @@
                 {
                     while (rdr.Read())
                     {
-                        Table tbl = new Table();
-                        tbl.Name = rdr["TABLE_NAME"].ToString();
-                        tbl.Schema = rdr["TABLE_SCHEMA"].ToString();
-                        tbl.IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0;
+                        Table tbl = new Table
+                        {
+                            Name = rdr["TABLE_NAME"].ToString(),
+                            Schema = rdr["TABLE_SCHEMA"].ToString(),
+                            IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0
+                        };
                         tbl.CleanName = CleanUp(tbl.Name);
                         tbl.ClassName = Inflector.MakeSingular(tbl.CleanName);
                         result.Add(tbl);
@@ -49,18 +51,19 @@
                 string PrimaryKey = GetPK(tbl.Name);
                 var pkColumn = tbl.Columns.SingleOrDefault(x => x.Name.ToLower().Trim() == PrimaryKey.ToLower().Trim());
                 if (pkColumn != null)
+                {
                     pkColumn.IsPK = true;
+                }
             }
 
 
             return result;
         }
 
-        DbConnection _connection;
-        DbProviderFactory _factory;
+        private DbConnection _connection;
+        private DbProviderFactory _factory;
 
-
-        List<Column> LoadColumns(Table tbl)
+        private List<Column> LoadColumns(Table tbl)
         {
 
             using (var cmd = _factory.CreateCommand())
@@ -80,8 +83,10 @@
                 {
                     while (rdr.Read())
                     {
-                        Column col = new Column();
-                        col.Name = rdr["ColumnName"].ToString();
+                        Column col = new Column
+                        {
+                            Name = rdr["ColumnName"].ToString()
+                        };
                         col.PropertyName = CleanUp(col.Name);
                         col.PropertyType = GetPropertyType(rdr["DataType"].ToString(), (rdr["DataScale"] == DBNull.Value ? null : rdr["DataScale"].ToString()));
                         col.IsNullable = "YES".Equals(rdr["isnullable"].ToString()) || "Y".Equals(rdr["isnullable"].ToString());
@@ -94,7 +99,7 @@
             }
         }
 
-        string GetPK(string table)
+        private string GetPK(string table)
         {
 
             string sql = @"select column_name from USER_CONSTRAINTS uc
@@ -118,13 +123,15 @@ and ucc.position = 1";
                 var result = cmd.ExecuteScalar();
 
                 if (result != null)
+                {
                     return result.ToString();
+                }
             }
 
             return "";
         }
 
-        string GetPropertyType(string sqlType, string dataScale)
+        private string GetPropertyType(string sqlType, string dataScale)
         {
             string sysType = "string";
             sqlType = sqlType.ToLower();
@@ -173,21 +180,19 @@ and ucc.position = 1";
             }
 
             if (sqlType == "number" && dataScale == "0")
+            {
                 return "long";
+            }
 
             return sysType;
         }
 
-
-
-        const string TABLE_SQL = @"select TABLE_NAME, 'Table' TABLE_TYPE, USER TABLE_SCHEMA
+        private const string TABLE_SQL = @"select TABLE_NAME, 'Table' TABLE_TYPE, USER TABLE_SCHEMA
 from USER_TABLES
 union all
 select VIEW_NAME, 'View', USER
 from USER_VIEWS";
-
-
-        const string COLUMN_SQL = @"select table_name TableName, 
+        private const string COLUMN_SQL = @"select table_name TableName, 
  column_name ColumnName, 
  data_type DataType, 
  data_scale DataScale,

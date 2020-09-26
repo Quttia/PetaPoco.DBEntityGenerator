@@ -1,7 +1,6 @@
 ﻿namespace PetaPoco.DBEntityGenerator
 {
     using System;
-    using System.Collections.Generic;
 
     public class GenerateCommand
     {

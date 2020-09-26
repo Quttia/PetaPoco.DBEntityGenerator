@@ -14,26 +14,14 @@
         public string SequenceName;
         public bool Ignore;
 
-        public Column PK
-        {
-            get
-            {
-                return this.Columns.SingleOrDefault(x => x.IsPK);
-            }
-        }
+        public Column PK => Columns.SingleOrDefault(x => x.IsPK);
 
         public Column GetColumn(string columnName)
         {
             return Columns.Single(x => string.Compare(x.Name, columnName, true) == 0);
         }
 
-        public Column this[string columnName]
-        {
-            get
-            {
-                return GetColumn(columnName);
-            }
-        }
+        public Column this[string columnName] => GetColumn(columnName);
     }
 
     public class Column
@@ -61,13 +49,7 @@
             return this.Single(x => string.Compare(x.Name, tableName, true) == 0);
         }
 
-        public Table this[string tableName]
-        {
-            get
-            {
-                return GetTable(tableName);
-            }
-        }
+        public Table this[string tableName] => GetTable(tableName);
 
     }
 }

@@ -27,10 +27,12 @@
                 {
                     while (rdr.Read())
                     {
-                        Table tbl = new Table();
-                        tbl.Name = rdr["TABLE_NAME"].ToString();
-                        tbl.Schema = rdr["TABLE_SCHEMA"].ToString();
-                        tbl.IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0;
+                        Table tbl = new Table
+                        {
+                            Name = rdr["TABLE_NAME"].ToString(),
+                            Schema = rdr["TABLE_SCHEMA"].ToString(),
+                            IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0
+                        };
                         tbl.CleanName = CleanUp(tbl.Name);
                         tbl.ClassName = Inflector.MakeSingular(tbl.CleanName);
 
@@ -56,11 +58,10 @@
             return result;
         }
 
-        DbConnection _connection;
-        DbProviderFactory _factory;
+        private DbConnection _connection;
+        private DbProviderFactory _factory;
 
-
-        List<Column> LoadColumns(Table tbl)
+        private List<Column> LoadColumns(Table tbl)
         {
 
             using (var cmd = _factory.CreateCommand())
@@ -83,8 +84,10 @@
                 {
                     while (rdr.Read())
                     {
-                        Column col = new Column();
-                        col.Name = rdr["ColumnName"].ToString();
+                        Column col = new Column
+                        {
+                            Name = rdr["ColumnName"].ToString()
+                        };
                         col.PropertyName = CleanUp(col.Name);
                         col.PropertyType = GetPropertyType(rdr["DataType"].ToString());
                         col.IsNullable = rdr["IsNullable"].ToString() == "YES";
@@ -99,7 +102,7 @@
             }
         }
 
-        string GetPK(string table)
+        private string GetPK(string table)
         {
             string sql = @"SELECT c.name AS ColumnName
                 FROM sys.indexes AS i 
@@ -121,13 +124,15 @@
                 var result = cmd.ExecuteScalar();
 
                 if (result != null)
+                {
                     return result.ToString();
+                }
             }
 
             return "";
         }
 
-        string GetPropertyType(string sqlType)
+        private string GetPropertyType(string sqlType)
         {
             string sysType = "string";
             switch (sqlType)
@@ -189,12 +194,11 @@
             return sysType;
         }
 
-        const string TABLE_SQL = @"SELECT *
+        private const string TABLE_SQL = @"SELECT *
             FROM  INFORMATION_SCHEMA.TABLES
             WHERE TABLE_TYPE='BASE TABLE' OR TABLE_TYPE='VIEW'
             ORDER BY TABLE_SCHEMA,TABLE_TYPE,TABLE_NAME";
-
-        const string COLUMN_SQL = @"SELECT 
+        private const string COLUMN_SQL = @"SELECT 
             TABLE_CATALOG AS [Database],
             TABLE_SCHEMA AS Owner, 
             TABLE_NAME AS TableName, 

@@ -7,14 +7,13 @@
     using Oracle.ManagedDataAccess.Client;
     using PetaPoco.DBEntityGenerator.Outputs;
     using System;
-    using System.Collections.Generic;
     using System.Data.Common;
     using System.Data.SqlClient;
     using System.IO;
 
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
 #if NETCOREAPP
             DbProviderFactories.RegisterFactory("Npgsql", NpgsqlFactory.Instance);

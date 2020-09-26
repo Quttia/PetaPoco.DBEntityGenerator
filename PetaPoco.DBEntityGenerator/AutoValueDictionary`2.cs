@@ -17,8 +17,7 @@
         {
             get
             {
-                TValue v;
-                if (!TryGetValue(key, out v))
+                if (!TryGetValue(key, out TValue v))
                 {
                     v = new TValue();
                     Add(key, v);
@@ -27,10 +26,7 @@
                 return v;
             }
 
-            set
-            {
-                base[key] = value;
-            }
+            set => base[key] = value;
         }
     }
 }

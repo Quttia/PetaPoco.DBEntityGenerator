@@ -9,11 +9,11 @@
 
     public class Generator
     {
-        private IOutput _outer;
+        private readonly IOutput _outer;
 
         public Generator(IOutput outer)
         {
-            this._outer = outer;
+            _outer = outer;
         }
 
         public void Generate(GenerateCommand cmd)
@@ -154,7 +154,9 @@
 
                             // Make sure property name doesn't clash with class name
                             if (c.PropertyName == t.ClassName)
+                            {
                                 c.PropertyName = "_" + c.PropertyName;
+                            }
                         }
                     }
 

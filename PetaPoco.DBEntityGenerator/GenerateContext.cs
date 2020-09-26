@@ -8,11 +8,8 @@
 
         public Func<string, string> EscapeSqlIdentifier
         {
-            get { return _escapeSqlIdentifier; }
-            set
-            {
-                _escapeSqlIdentifier = value;
-            }
+            get => _escapeSqlIdentifier;
+            set => _escapeSqlIdentifier = value;
         }
 
         public GenerateCommand Command { get; set; }

@@ -1,7 +1,6 @@
 ﻿namespace PetaPoco.DBEntityGenerator.Outputs
 {
     using System;
-    using System.Text;
 
     public class ConsoleOutput : IOutput
     {

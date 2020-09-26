@@ -3,14 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Text.RegularExpressions;
 
     public static class Helpers
     {
-        static Regex rxCleanUp = new Regex(@"[^\w\d_]", RegexOptions.Compiled);
-
-        static string[] cs_keywords = { "abstract", "event", "new", "struct", "as", "explicit", "null",
+        private static readonly Regex rxCleanUp = new Regex(@"[^\w\d_]", RegexOptions.Compiled);
+        private static readonly string[] cs_keywords = { "abstract", "event", "new", "struct", "as", "explicit", "null",
             "switch", "base", "extern", "object", "this", "bool", "false", "operator", "throw",
             "break", "finally", "out", "true", "byte", "fixed", "override", "try", "case", "float",
             "params", "typeof", "catch", "for", "private", "uint", "char", "foreach", "protected",
@@ -25,7 +23,9 @@
             str = rxCleanUp.Replace(str, "_");
 
             if (char.IsDigit(str[0]) || cs_keywords.Contains(str))
+            {
                 str = "@" + str;
+            }
 
             return str;
         };
@@ -39,7 +39,9 @@
                 col.PropertyType != "Microsoft.SqlServer.Types.SqlGeography" &&
                 col.PropertyType != "Microsoft.SqlServer.Types.SqlGeometry"
                 )
+            {
                 result = "?";
+            }
 
             return result;
         }
