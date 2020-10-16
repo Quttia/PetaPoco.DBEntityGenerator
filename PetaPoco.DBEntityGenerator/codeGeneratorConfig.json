@@ -1,0 +1,74 @@
+{
+  "ProviderName": "MySql",
+  "ConnectionString": "Data Source=192.168.50.15;port=3306;Database=test_benchmark;User ID=root;Password=j2CTrfNdPr4&w3xr;CharSet=utf8;",
+  "SchemaName": null,
+  "ClassPrefix": null,
+  "ClassSuffix": null,
+  "IncludeViews": false,
+  "ExcludePrefix": [],
+  "Namespace": "Bootstrap.DataAccess",
+  "ExplicitColumns": true,
+  "TrackModifiedColumns": false,
+  "Tables": {
+    "test_benchmark.DBLogs": {
+      "Ignore": true
+    },
+    "test_benchmark.Dicts": {
+      "Ignore": true
+    },
+    "test_benchmark.Exceptions": {
+      "Ignore": true
+    },
+    "test_benchmark.Groups": {
+      "Ignore": true
+    },
+    "test_benchmark.LoginLogs": {
+      "Ignore": true
+    },
+    "test_benchmark.Logs": {
+      "Ignore": true
+    },
+    "test_benchmark.Messages": {
+      "Ignore": true
+    },
+    "test_benchmark.NavigationRole": {
+      "Ignore": true
+    },
+    "test_benchmark.Navigations": {
+      "Ignore": true
+    },
+    "test_benchmark.Notifications": {
+      "Ignore": true
+    },
+    "test_benchmark.RejectUsers": {
+      "Ignore": true
+    },
+    "test_benchmark.ResetUsers": {
+      "Ignore": true
+    },
+    "test_benchmark.RoleApp": {
+      "Ignore": true
+    },
+    "test_benchmark.RoleGroup": {
+      "Ignore": true
+    },
+    "test_benchmark.Roles": {
+      "Ignore": true
+    },
+    "test_benchmark.Tasks": {
+      "Ignore": true
+    },
+    "test_benchmark.Traces": {
+      "Ignore": true
+    },
+    "test_benchmark.UserGroup": {
+      "Ignore": true
+    },
+    "test_benchmark.UserRole": {
+      "Ignore": true
+    },
+    "test_benchmark.Users": {
+      "Ignore": true
+    }
+  }
+}

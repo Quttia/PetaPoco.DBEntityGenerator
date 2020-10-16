@@ -30,6 +30,9 @@
             return str;
         };
 
+        internal static Func<string, string> FirstLetterToUpper = (str) =>
+            string.Concat(str.Split('_').Select(x => System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(x)));
+
         internal static string CheckNullable(Column col)
         {
             string result = "";

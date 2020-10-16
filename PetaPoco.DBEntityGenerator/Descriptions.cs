@@ -13,6 +13,7 @@
         public string ClassName;
         public string SequenceName;
         public bool Ignore;
+        public string Comment;
 
         public Column PK => Columns.SingleOrDefault(x => x.IsPK);
 
@@ -29,6 +30,7 @@
         public string Name;
         public string PropertyName;
         public string PropertyType;
+        public string Comment;
         public bool IsPK;
         public bool IsNullable;
         public bool IsAutoIncrement;

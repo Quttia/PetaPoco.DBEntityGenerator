@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Common;
+    using System.Linq;
 
     public class MySqlSchemaReader : SchemaReader
     {
@@ -26,15 +27,15 @@
                         {
                             Name = rdr["TABLE_NAME"].ToString(),
                             Schema = rdr["TABLE_SCHEMA"].ToString(),
+                            Comment = rdr["TABLE_COMMENT"].ToString(),
                             IsView = string.Compare(rdr["TABLE_TYPE"].ToString(), "View", true) == 0
                         };
                         tbl.CleanName = CleanUp(tbl.Name);
-                        tbl.ClassName = Inflector.MakeSingular(tbl.CleanName);
+                        tbl.ClassName = FirstLetterToUpper(Inflector.MakeSingular(tbl.CleanName));
                         result.Add(tbl);
                     }
                 }
             }
-
 
             //this will return everything for the DB
             var schema = connection.GetSchema("COLUMNS");
@@ -52,7 +53,8 @@
                     {
                         Name = row["COLUMN_NAME"].ToString()
                     };
-                    col.PropertyName = CleanUp(col.Name);
+                    col.Comment = row["COLUMN_COMMENT"].ToString();
+                    col.PropertyName = FirstLetterToUpper(CleanUp(col.Name));
                     col.PropertyType = GetPropertyType(row);
                     col.IsNullable = row["IS_NULLABLE"].ToString() == "YES";
                     col.IsPK = row["COLUMN_KEY"].ToString() == "PRI";
@@ -69,6 +71,7 @@
         private static string GetPropertyType(DataRow row)
         {
             bool bUnsigned = row["COLUMN_TYPE"].ToString().IndexOf("unsigned") >= 0;
+            var colName = row["COLUMN_NAME"].ToString();
             string propType = "string";
             switch (row["DATA_TYPE"].ToString())
             {
@@ -76,7 +79,14 @@
                     propType = bUnsigned ? "ulong" : "long";
                     break;
                 case "int":
-                    propType = bUnsigned ? "uint" : "int";
+                    if (colName == "id")
+                    {
+                        propType = "string";
+                    }
+                    else
+                    {
+                        propType = bUnsigned ? "uint" : "int";
+                    }
                     break;
                 case "smallint":
                     propType = bUnsigned ? "ushort" : "short";

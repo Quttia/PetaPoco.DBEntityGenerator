@@ -17,5 +17,10 @@
         {
             return Helpers.CleanUp(text);
         }
+
+        protected string FirstLetterToUpper(string text)
+        {
+            return Helpers.FirstLetterToUpper(text);
+        }
     }
 }

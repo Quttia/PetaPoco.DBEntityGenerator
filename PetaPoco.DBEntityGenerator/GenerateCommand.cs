@@ -11,6 +11,7 @@
         public string SchemaName { get; set; }
 
         public string ClassPrefix { get; set; }
+
         public string ClassSuffix { get; set; }
 
         public bool IncludeViews { get; set; }
@@ -20,6 +21,7 @@
         public string Namespace { get; set; }
 
         public bool ExplicitColumns { get; set; }
+
         public bool TrackModifiedColumns { get; set; }
 
         public AutoValueDictionary<string, GenerateTableCommand> Tables { get; set; }
@@ -50,6 +52,7 @@
     public class GenerateColumnCommand
     {
         public bool Ignore { get; set; }
+
         public bool ForceToUtc { get; set; }
 
         public string PropertyName { get; set; }
