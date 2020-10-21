@@ -69,6 +69,30 @@
     },
     "test_benchmark.Users": {
       "Ignore": true
+    },
+    "test_benchmark.bit_config": {
+      "Ignore": true
+    },
+    "test_benchmark.image2material": {
+      "Ignore": false
+    },
+    "test_benchmark.image2shop": {
+      "Ignore": true
+    },
+    "test_benchmark.image_version": {
+      "Ignore": true
+    },
+    "test_benchmark.sync_shop": {
+      "Ignore": true
+    },
+    "test_benchmark.sys_image": {
+      "Ignore": true
+    },
+    "test_benchmark.sys_option": {
+      "Ignore": true
+    },
+    "test_benchmark.sys_plan": {
+      "Ignore": true
     }
   }
 }

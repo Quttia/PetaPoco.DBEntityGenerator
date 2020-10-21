@@ -1,0 +1,40 @@
+﻿using Bootstrap.DataAccess;
+using Longbow.Web.Mvc;
+using System;
+using System.Linq;
+
+namespace Bootstrap.Admin.Query
+{{
+    /// <summary>
+    /// 查询条件类
+    /// </summary>
+    public class Query{0}Option : PaginationOption
+    {{
+{1}
+{2}
+        /// <summary>
+        /// 查询数据方法
+        /// </summary>
+        /// <returns></returns>
+        public QueryData<object> RetrieveData()
+        {{
+            var data = {0}Helper.Retrieves();
+
+{3}
+            if (!string.IsNullOrEmpty(Search))
+            {{
+                data = {4});
+            }}
+
+            var ret = new QueryData<object>
+            {{
+                total = data.Count()
+            }};
+            switch (Sort)
+            {{
+{5}            }}
+            ret.rows = data.Skip(Offset).Take(Limit);
+            return ret;
+        }}
+    }}
+}}

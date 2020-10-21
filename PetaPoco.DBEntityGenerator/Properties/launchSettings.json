@@ -2,7 +2,7 @@
   "profiles": {
     "PetaPoco.DBEntityGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "--config D:\\Project\\PetaPoco.DBEntityGenerator\\PetaPoco.DBEntityGenerator\\codeGeneratorConfig.json -o file --outputFile D:\\Project\\NingMeiCode\\BenchmarkAdmin\\src\\admin\\Bootstrap.DataAccess\\Benchmark\\Database.cs"
+      "commandLineArgs": "--config D:\\Project\\PetaPoco.DBEntityGenerator\\PetaPoco.DBEntityGenerator\\codeGeneratorConfig.json -o file --outputFile C:\\Users\\LCL\\Desktop\\Database.cs"
     }
   }
 }

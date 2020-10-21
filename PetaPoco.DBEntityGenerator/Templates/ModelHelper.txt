@@ -1,0 +1,47 @@
+﻿using Bootstrap.Security;
+using Bootstrap.Security.DataAccess;
+using Longbow.Cache;
+using System.Collections.Generic;
+
+namespace Bootstrap.DataAccess
+{{
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class {0}Helper
+    {{
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string Retrieve{0}sDataKey = "{0}Helper-Retrieve{0}s";
+
+        /// <summary>
+        /// 查询所有信息
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<{0}> Retrieves() => CacheManager.GetOrAdd("Retrieve{0}sDataKey", key => DbContextManager.Create<{0}>()?.Retrieves()) ?? new {0}[0];
+
+        /// <summary>
+        /// 保存新建/更新的信息
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static bool Save({0} p)
+        {{
+            var ret = DbContextManager.Create<{0}>()?.Save(p) ?? false;
+            //if (ret) CacheCleanUtility.ClearCache(ShopIds: string.IsNullOrEmpty(p.Id) ? new List<string>() : new List<string>() {{ p.Id }});
+            return ret;
+        }}
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="values"></param>
+        public static bool Delete(IEnumerable<string> values)
+        {{
+            var ret = DbContextManager.Create<{0}>()?.Delete(values) ?? false;
+            //if (ret) CacheCleanUtility.ClearCache(ReceiverIds: values);
+            return ret;
+        }}
+    }}
+}}

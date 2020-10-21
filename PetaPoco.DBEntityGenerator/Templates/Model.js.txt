@@ -1,0 +1,34 @@
+$(function () {{
+    var aIfExpired = [
+        '<button class="btn btn-danger"><i class="fa fa-ban"></i><span>过期</span></button>',
+        '<button class="btn btn-success"><i class="fa fa-check-circle"></i><span>有效</span></button>'];
+    var StateFormatter = function (value) {{
+        return aIfExpired[value ? 0 : 1];
+    }};
+
+    $('table').lgbTable({{
+        url: 'api/{0}s',
+        dataBinder: {{
+            map: {{
+{1}
+            }}
+        }},
+        smartTable: {{
+            sortName: 'CreateTime',
+            sortOrder: 'desc',
+            queryParams: function (params) {{
+                return $.extend(params, {{
+{2}
+                }});
+            }},
+            columns: [
+                {{ title: "序号", formatter: function (value, row, index) {{ return index + 1; }} }},
+{3}
+            ],
+            exportOptions: {{
+                fileName: "",
+                ignoreColumn: [0, 11]
+            }}
+        }}
+    }});
+}});

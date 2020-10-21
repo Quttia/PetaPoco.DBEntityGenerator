@@ -54,6 +54,7 @@
                         Name = row["COLUMN_NAME"].ToString()
                     };
                     col.Comment = row["COLUMN_COMMENT"].ToString();
+                    col.Length = row["CHARACTER_MAXIMUM_LENGTH"].ToString();
                     col.PropertyName = FirstLetterToUpper(CleanUp(col.Name));
                     col.PropertyType = GetPropertyType(row);
                     col.IsNullable = row["IS_NULLABLE"].ToString() == "YES";

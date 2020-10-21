@@ -31,6 +31,7 @@
         public string PropertyName;
         public string PropertyType;
         public string Comment;
+        public string Length;
         public bool IsPK;
         public bool IsNullable;
         public bool IsAutoIncrement;

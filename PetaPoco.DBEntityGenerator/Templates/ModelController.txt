@@ -1,0 +1,52 @@
+﻿using Bootstrap.Admin.Query;
+using Bootstrap.DataAccess;
+using Longbow.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Collections.Generic;
+
+namespace Bootstrap.Admin.Controllers.BasisApi
+{{
+    /// <summary>
+    /// 控制器
+    /// </summary>
+    [Route("api/[controller]")]
+    [Authorize]
+    [ApiController]
+    public class {0}sController : ControllerBase
+    {{
+        /// <summary>
+        /// 数据查询方法
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public QueryData<object> Get([FromQuery] Query{0}Option value)
+        {{
+            return value.RetrieveData();
+        }}
+
+        /// <summary>
+        /// 保存方法
+        /// </summary>
+        /// <param name="value"></param>
+        [HttpPost]
+        [ButtonAuthorize(Url = "~/{0}/{0}s", Auth = "add,edit")]
+        public bool Post([FromBody] {0} value)
+        {{
+            return {0}Helper.Save(value);
+        }}
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="value"></param>
+        [HttpDelete]
+        [ButtonAuthorize(Url = "~/{0}/{0}s", Auth = "del")]
+        public bool Delete([FromBody] IEnumerable<string> value)
+        {{
+            return {0}Helper.Delete(value);
+        }}
+    }}
+}}
