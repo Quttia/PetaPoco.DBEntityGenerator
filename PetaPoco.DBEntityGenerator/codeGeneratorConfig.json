@@ -74,7 +74,7 @@
       "Ignore": true
     },
     "test_benchmark.image2material": {
-      "Ignore": false
+      "Ignore": true
     },
     "test_benchmark.image2shop": {
       "Ignore": true
@@ -93,6 +93,12 @@
     },
     "test_benchmark.sys_plan": {
       "Ignore": true
+    },
+    "test_benchmark.plan_option": {
+      "Ignore": true
+    },
+    "test_benchmark.material_config": {
+      "Ignore": false
     }
   }
 }

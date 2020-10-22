@@ -1,9 +1,9 @@
 $(function () {{
-    var aIfExpired = [
-        '<button class="btn btn-danger"><i class="fa fa-ban"></i><span>过期</span></button>',
-        '<button class="btn btn-success"><i class="fa fa-check-circle"></i><span>有效</span></button>'];
+    var aState = [
+        '<button class="btn btn-danger"><i class="fa fa-ban"></i><span>禁用</span></button>',
+        '<button class="btn btn-success"><i class="fa fa-check-circle"></i><span>启用</span></button>'];
     var StateFormatter = function (value) {{
-        return aIfExpired[value ? 0 : 1];
+        return aState[value ? 1 : 0];
     }};
 
     $('table').lgbTable({{

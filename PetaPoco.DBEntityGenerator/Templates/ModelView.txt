@@ -32,6 +32,7 @@
     <div class="modal-body">
         <form class="form-inline">
             <div class="row">
+            <input type="hidden" id="Id" />
 {2}
             </div>
         </form>

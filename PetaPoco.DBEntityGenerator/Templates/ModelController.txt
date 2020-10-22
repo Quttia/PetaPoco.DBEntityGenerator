@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 
-namespace Bootstrap.Admin.Controllers.BasisApi
+namespace Bootstrap.Admin.Controllers.BenchmarkApi
 {{
     /// <summary>
     /// 控制器
